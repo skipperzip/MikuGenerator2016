@@ -3,7 +3,7 @@
 #include "main.h"
 #include "iostream"
 #include <Windows.h>
-
+//written by Skipperzip
 void main()
 {
 	//name
