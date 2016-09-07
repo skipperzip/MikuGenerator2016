@@ -20,8 +20,13 @@ void main()
 	else if (Choice == 2) PlaySound("theme2.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	else if (Choice == 3) PlaySound("theme3.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	else PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	//set variables
 
+	//set variables
+	char c = '\0';
+	int bounceCount = 0;
+	float diff = 0;
+	int print = 0;
+	//first circle
 	float ballX = 400;
 	float ballY = 300;
 	float moveX = 0;
@@ -31,10 +36,6 @@ void main()
 	int Xtrue = 0;
 	int Ytrue = 0;
 	int BallHit = 0;
-	char c = '\0';
-	int bounceCount = 0;
-	float diff = 0;
-	int print = 0;
 	//second circle
 	float ballX2 = 400;
 	float ballY2 = 300;
@@ -53,14 +54,27 @@ void main()
 	int Ytrue3 = 0;
 	float distance3 = 0;
 	int BallHit3 = 0;
-
+	//spike1
+	float SpikeX = 0;
+	float SpikeY = 300;
 	
+	int SpikeTrueX = 0;
+	int SpikeTrueY = 0;
 
+	int Spike = 0;
+	//spike2
+	float SpikeX2 = 800;
+	float SpikeY2 = 300;
+
+	int SpikeTrueX2 = 0;
+	int SpikeTrueY2 = 0;
+
+	int Spike2 = 0;
 
 	//the loop!
 	while (sfw::stepContext())
 	{	
-
+		//------------------------------------------------------------------------------------------------------------first ball
 		if (bounceCount < 10) diff = bounceCount / 2;
 		//check if in hitbox
 		if (sfw::getMouseX() >= ballX - distance && sfw::getMouseX() <= ballX + distance) Xtrue = 1;
@@ -165,7 +179,7 @@ void main()
 				}
 			}
 		}
-//------------------------------------------------------------------------------------------------------------third ball
+		//------------------------------------------------------------------------------------------------------------third ball
 		if (bounceCount >= 30 && bounceCount < 35 && print != 1) sfw::drawString(d, "THIRD BALL INCOMING", 200, 300, 24, 24);
 		if (bounceCount >= 35)
 		{
@@ -219,8 +233,60 @@ void main()
 				}
 			}
 		}
+		//Spike 1
+		if (sfw::getMouseX() >= SpikeX - 25 && sfw::getMouseX() <= SpikeX + 25) SpikeTrueX = 1;
+		else SpikeTrueX = 0;
+		if (sfw::getMouseY() >= SpikeY - 25 && sfw::getMouseY() <= SpikeY + 25) SpikeTrueY = 1;
+		else SpikeTrueY = 0;
 
+		if (sfw::getMouseX() > SpikeX) SpikeX = SpikeX + 2;
+		else if (sfw::getMouseX() < SpikeX) SpikeX = SpikeX - 2;
+		else SpikeX = SpikeX;
+		if (sfw::getMouseY() > SpikeY) SpikeY = SpikeY + 2;
+		else if (sfw::getMouseY() < SpikeY) SpikeY = SpikeY - 2;
+		else SpikeY = SpikeY;
 
+		if (SpikeTrueX == 1 && SpikeTrueY == 1)
+		{
+			sfw::drawString(d, "X", SpikeX - 25 / 2, SpikeY + 25 / 2, 25, 25);
+			sfw::drawString(d, "You Lost", 300, 300, 24, 24);
+
+			if (print == 0) printf("you hit the ball %d time(s)", bounceCount);
+			print = 1;
+			Spike = 1;
+		}
+		if (Spike == 1)
+		{
+			sfw::drawString(d, "!", SpikeX - 25 / 2, SpikeY + 25 / 2, 25, 25);
+			sfw::drawString(d, "You Lost", 300, 300, 24, 24);
+		}
+		//Spike 2
+		if (sfw::getMouseX() >= SpikeX2 - 25 && sfw::getMouseX() <= SpikeX2 + 25) SpikeTrueX2 = 1;
+		else SpikeTrueX2 = 0;
+		if (sfw::getMouseY() >= SpikeY - 25 && sfw::getMouseY() <= SpikeY + 25) SpikeTrueY2 = 1;
+		else SpikeTrueY2 = 0;
+
+		if (sfw::getMouseX() > SpikeX2) SpikeX2 = SpikeX2 + 2;
+		else if (sfw::getMouseX() < SpikeX2) SpikeX2 = SpikeX2 - 2;
+		else SpikeX2 = SpikeX2;
+		if (sfw::getMouseY() > SpikeY2) SpikeY2 = SpikeY2 + 2;
+		else if (sfw::getMouseY() < SpikeY2) SpikeY2 = SpikeY2 - 2;
+		else SpikeY2 = SpikeY2;
+
+		if (SpikeTrueX2 == 1 && SpikeTrueY2 == 1)
+		{
+			sfw::drawString(d, "X", SpikeX2 - 25 / 2, SpikeY2 + 25 / 2, 25, 25);
+			sfw::drawString(d, "You Lost", 300, 300, 24, 24);
+
+			if (print == 0) printf("you hit the ball %d time(s)", bounceCount);
+			print = 1;
+			Spike2 = 1;
+		}
+		if (Spike2 == 1)
+		{
+			sfw::drawString(d, "!", SpikeX2 - 25 / 2, SpikeY2 + 25 / 2, 25, 25);
+			sfw::drawString(d, "You Lost", 300, 300, 24, 24);
+		}
 		//draw texture and circle
 		
 		sfw::drawTexture(r, 0, 600, 800, 600, 0, false,0, 0x88888888);
@@ -229,6 +295,9 @@ void main()
 		sfw::drawCircle(ballX, ballY, distance, 120, CYAN);
 		sfw::drawCircle(ballX2, ballY2, distance2, 120, CYAN);
 		sfw::drawCircle(ballX3, ballY3, distance3, 120, CYAN);
+		sfw::drawCircle(SpikeX, SpikeY, 25, 120, RED);
+		sfw::drawCircle(SpikeX2, SpikeY2, 25, 120, RED);
+
 
 		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u)/2, sfw::getTextureHeight(u)/2);
 	}
