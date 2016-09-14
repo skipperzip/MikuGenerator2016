@@ -1,6 +1,7 @@
 
 #include "main.h"
 #include "Splash.h"
+#include <ctime>
 //reuploading again
 //written by Skipperzip
 /*
@@ -488,6 +489,13 @@ void main()
 	int NukeTimer = 0;
 	float BossX = 400;
 	float BossY = 300;
+	int i = 0;
+	int bulletsX[100];
+	int bulletsY[100];
+	int bulletsScale[100];
+	int RandX[100];
+	int RandY[100];
+	int bulletTime[100];
 
 	PlaySound(NULL, 0, 0);
 	PlaySound("./res/Nuclear.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
@@ -495,46 +503,111 @@ void main()
 
 	while (sfw::stepContext()) //lol fonts actually work
 	{
+
 		sfw::drawTexture(r, 0, 600, 800, 600, 0, false, 0, 0x88888888);
 
 
-		if (NukeTimer >= 300 && NukeTimer <= 450)
+
+		//draw the boss
+		if (NukeTimer >= 300 && NukeTimer <= 490)
 		{
 			if (NukeTimer <= 390)
 			{
-				sfw::drawString(BossFont, "b", BossX - 125, BossY + 200, 300, 400);
+				sfw::drawString(BossFont, "b", BossX - 144, BossY + 200, 300, 400);
 			}
 			if (NukeTimer > 390)
 			{
-				sfw::drawString(BossFont, "c", BossX - 125, BossY + 200, 300, 400);
-				--NukeTimer;
+				sfw::drawString(BossFont, "c", BossX - 144, BossY + 200, 300, 400);
 			}
-			++NukeTimer;
+			if (NukeTimer > 480)
+			{
+				Texture = 0;
+				TextureUp = 1;
+				NukeTimer = 0;
+			}
+			
 		}
 		else if (TextureUp == 1)
 		{
-			sfw::drawString(BossFont, "`", BossX - 125, BossY + 200, 300, 400);
+			sfw::drawString(BossFont, "`", BossX - 144, BossY + 200, 300, 400);
 			if (Texture == 15) 
 			{ 
 				TextureUp = 0; 
 			}
 			++Texture;
-			++NukeTimer;
+			
 		}
 		else
 		{
-			sfw::drawString(BossFont, "a", BossX - 125, BossY + 200, 300, 400);
+			sfw::drawString(BossFont, "a", BossX - 144, BossY + 200, 300, 400);
 			--Texture;
 			if (Texture == 0)
 			{
 				TextureUp = 1;
 			}
 		}
+		++NukeTimer;
+		
+		i = 0;
+		//random array lol         we have some errors in this fix them later
+		while (i != 100)
+		{
+			if (bulletsScale[i] > 140) RandX[i] = (rand() % 800) + 1;
+			else if (bulletsScale[i] <= 0) bulletsScale[i] = 0;
+			++i;
+			printf("%d\n", RandX[i]);
+
+		}
+		i = 0;
+		while (i != 100)
+		{
+			if (bulletsScale[i] > 140) RandY[i] = (rand() % 800) + 1;
+			++i;
+		}
+		i = 0;
+		while (i != 100)
+		{
+			if (bulletTime[i] = 0) bulletTime[i] = (rand() % 100) + 1;
+			++i;
+		}
+		i = 0;
+		//loop catcher here
+		while (i != 100)
+		{
+			//insert touhou here lol
+			srand((unsigned)time(0));
+			bulletsX[i] = RandX[i];
+			bulletsY[i] = RandY[i];
+			if (bulletTime != 0) bulletTime[i] = bulletTime[i] - 1;
+			else if (bulletsScale[i] < 1) bulletsScale[i] = 1;
+			if (bulletsScale[i] > 150) bulletsScale[i] = 50;
+			bulletsScale[i] = bulletsScale[i] + 5;
+			sfw::drawString(BossFont, "d", bulletsX[i] - bulletsScale[i] / 2, bulletsY[i] + bulletsScale[i] / 2, bulletsScale[i], bulletsScale[i]);
+			++i;
+		}
+
+
+		
+
+
+
+
+
+		//sfw::drawString(BossFont, "d", BossX , BossY , 300, 300);
+
+
+	
+
+
+
+
+
+
+
+		// draw player
 		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
 
 
-
-		//INSERT BULLLET HELL HERE LOL
 	}
 
 
