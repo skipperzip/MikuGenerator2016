@@ -480,13 +480,12 @@ void main()
 	}
 	*/
 	//initiate TOUHOU.EXE
-	unsigned Boss1 = sfw::loadTextureMap("./res/Boss1.bmp");
-	unsigned Boss2 = sfw::loadTextureMap("./res/Boss2.bmp");
-	unsigned Boss3 = sfw::loadTextureMap("./res/Boss3.bmp");
-	unsigned BossNuke = sfw::loadTextureMap("./res/BossNuke.bmp");
+	unsigned BossFont = sfw::loadTextureMap("./res/Boss.png", 16, 6);
+
 
 	int Texture = 0;
 	int TextureUp = 1;
+	int NukeTimer = 0;
 	float BossX = 400;
 	float BossY = 300;
 
@@ -494,23 +493,37 @@ void main()
 	PlaySound("./res/Nuclear.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 
 
-	while (sfw::stepContext())
+	while (sfw::stepContext()) //lol fonts actually work
 	{
 		sfw::drawTexture(r, 0, 600, 800, 600, 0, false, 0, 0x88888888);
-		if (TextureUp == 1)
+
+
+		if (NukeTimer >= 300 && NukeTimer <= 450)
 		{
-			sfw::drawTexture(Boss2, BossX, BossY, sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
-			sfw::drawTexture(Boss1, BossX, BossY, 0, 0);
+			if (NukeTimer <= 390)
+			{
+				sfw::drawString(BossFont, "b", BossX - 125, BossY + 200, 300, 400);
+			}
+			if (NukeTimer > 390)
+			{
+				sfw::drawString(BossFont, "c", BossX - 125, BossY + 200, 300, 400);
+				--NukeTimer;
+			}
+			++NukeTimer;
+		}
+		else if (TextureUp == 1)
+		{
+			sfw::drawString(BossFont, "`", BossX - 125, BossY + 200, 300, 400);
 			if (Texture == 15) 
 			{ 
 				TextureUp = 0; 
 			}
 			++Texture;
+			++NukeTimer;
 		}
 		else
 		{
-			sfw::drawTexture(Boss2, BossX, BossY, 0, 0);
-			sfw::drawTexture(Boss1, BossX, BossY, sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+			sfw::drawString(BossFont, "a", BossX - 125, BossY + 200, 300, 400);
 			--Texture;
 			if (Texture == 0)
 			{
