@@ -1,5 +1,7 @@
 
 #include "main.h"
+#include "Splash.h"
+
 //written by Skipperzip
 /*
 class Circle
@@ -17,7 +19,7 @@ public:
 	
 };
 
-
+//this is laggy for seemingly no reason
 
 void main()
 {
@@ -35,26 +37,20 @@ void main()
 	unsigned u = sfw::loadTextureMap("./res/crosshair.png");
 	//unsigned w = sfw::loadTextureMap("./res/waifu.jpg");
 	//play some music
-//	int Choice = 1;
-//	if (Choice == 1) PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-//	else if (Choice == 2) PlaySound("theme2.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-//	else if (Choice == 3) PlaySound("theme3.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-//	else PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	int Choice = 1;
+	if (Choice == 1) PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	else if (Choice == 2) PlaySound("theme2.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	else if (Choice == 3) PlaySound("theme3.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	else PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 
 
 	//set variables
-	//char c = '\0';
+
 
 	int bounceCount = 0;
 	float diff = 0;
 	int print = 0;
 
-	//class???
-
-
-	//more class stuff?????
-
-	//so much class stuff.....
 
 	int i = 0;
 
@@ -172,6 +168,31 @@ void main()
 	unsigned r = sfw::loadTextureMap("./res/background.jpg");
 	unsigned u = sfw::loadTextureMap("./res/crosshair.png");
 	unsigned w = sfw::loadTextureMap("./res/waifu.jpg");
+	Splash splash;
+	splash.init(f);
+	APP_STATE state = ENTER_SPLASH;
+
+	bool quit = false;
+	while (sfw::stepContext() && !quit)
+	{
+		sfw::drawTexture(w, 0, 600, 800, 600, 0, false, 0, 0x88888888);
+		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+		switch (state)
+		{
+		case ENTER_SPLASH:
+				splash.play();
+		case SPLASH:
+				splash.step();
+				splash.draw();
+				state = splash.next();
+				break;
+		case TERMINATE: quit = true;
+		}
+	}
+
+	/*
+
+	sfw::drawTexture(w, 0, 600, 800, 600, 0, false, 0, 0x88888888);
 	//play some music
 	int Choice = 1;
 	if (Choice == 1) PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
@@ -179,7 +200,6 @@ void main()
 	else if (Choice == 3) PlaySound("theme3.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	else PlaySound("theme1.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	//set variables
-	char c = '\0';
 	int bounceCount = 0;
 	float diff = 0;
 	int print = 0;
@@ -227,9 +247,9 @@ void main()
 	int SpikeTrueY2 = 0;
 
 	int Spike2 = 0;
-
+	
 	//the loop!
-	while (sfw::stepContext())
+	while (sfw::stepContext() && bounceCount != 100)
 	{
 		//------------------------------------------------------------------------------------------------------------first ball
 		if (bounceCount < 10) diff = bounceCount / 2;
@@ -458,6 +478,55 @@ void main()
 
 		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
 	}
+	*/
+	//initiate TOUHOU.EXE
+	unsigned Boss1 = sfw::loadTextureMap("./res/Boss1.bmp");
+	unsigned Boss2 = sfw::loadTextureMap("./res/Boss2.bmp");
+	unsigned Boss3 = sfw::loadTextureMap("./res/Boss3.bmp");
+	unsigned BossNuke = sfw::loadTextureMap("./res/BossNuke.bmp");
+
+	int Texture = 0;
+	int TextureUp = 1;
+	float BossX = 400;
+	float BossY = 300;
+
+	PlaySound(NULL, 0, 0);
+	PlaySound("./res/Nuclear.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+
+
+	while (sfw::stepContext())
+	{
+		sfw::drawTexture(r, 0, 600, 800, 600, 0, false, 0, 0x88888888);
+		if (TextureUp == 1)
+		{
+			sfw::drawTexture(Boss2, BossX, BossY, sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+			sfw::drawTexture(Boss1, BossX, BossY, 0, 0);
+			if (Texture == 15) 
+			{ 
+				TextureUp = 0; 
+			}
+			++Texture;
+		}
+		else
+		{
+			sfw::drawTexture(Boss2, BossX, BossY, 0, 0);
+			sfw::drawTexture(Boss1, BossX, BossY, sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+			--Texture;
+			if (Texture == 0)
+			{
+				TextureUp = 1;
+			}
+		}
+		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+
+
+
+		//INSERT BULLLET HELL HERE LOL
+	}
+
+
+
+
 	sfw::termContext();
 	}
 
