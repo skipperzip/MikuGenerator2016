@@ -126,10 +126,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pong.cpp" />
     <ClCompile Include="Splash.cpp" />
+    <ClCompile Include="Utsuho.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bosses.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Pong.h" />
     <ClInclude Include="Splash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
