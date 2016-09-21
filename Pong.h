@@ -6,7 +6,7 @@ class Pong
 
 public:	
 							//set variables
-	int bounceCount = 0;
+	char bounceCount = 0;
 	float diff = 0;
 	int print = 0;
 	//first circle

@@ -18,7 +18,7 @@ public:
 	int Xtrue = 0;
 	int Ytrue = 0;
 	int BallHit = 0;
-	
+
 };
 
 //this is laggy for seemingly no reason
@@ -28,7 +28,7 @@ void main()
 
 	Circle circle[3];
 
-	
+
 	const int C_COUNT = 3;
 	//name
 	sfw::initContext(800, 600, "PONG!");
@@ -59,7 +59,7 @@ void main()
 	i = i - 1;
 //check if in hitbox
 	while (sfw::stepContext())
-	
+
 	{
 		i = i + 1;
 
@@ -159,7 +159,7 @@ void main()
 }
 
 
-	*/	
+	*/
 	//name
 void main()
 {
@@ -194,7 +194,7 @@ void main()
 	}
 
 	//initiate Exe.menu
-	APP_STATE menu = START_TOUHOU;
+	APP_STATE menu = ENTER_PONG;
 
 	APP_STATE state2 = ENTER_PONG;
 	bool escape = 0;
@@ -206,36 +206,53 @@ void main()
 	{
 		bool quit3 = false;
 		bool quit2 = false;
+
 		//draw buttons to be pressed
-		/*while (sfw::stepContext() && select != 1)
+		while (sfw::stepContext() && select != 1)
 		{
 			sfw::drawTexture(w, 0, 600, 800, 600, 0, false, 0, 0x88888888);
 			sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
-			sfw::drawString(d, "Pong", 300, 400, 24, 24);
-			sfw::drawString(d, "Touhou", 300, 200, 24, 24);
+			sfw::drawString(d, "Press P for Pong", 300, 450, 24, 24);
+			sfw::drawString(d, "Press T for Touhou", 300, 250, 24, 24);
+			sfw::drawString(d, "Press E to leave", 300, 100, 24, 24);
 			//on click stuff
-	
-		}
-		*/
-		
-		
-		
-		
-		
-		//take data into switch here
-		
-		
-		switch (menu)
 
+
+
+			if (sfw::getKey('T'))
+			{
+				menu = START_TOUHOU;
+				select = 1;
+			}
+			if (sfw::getKey('P'))
+			{
+				menu = START_PONG;
+				select = 1;
+			}
+			if (sfw::getKey('E'))
+			{
+				menu = ENTER_MENU;
+				select = 1;
+				escape = true;
+			}
+		}
+		select = 0;
+
+
+
+
+
+		//take data into switch here
+
+
+		switch (menu)
 		{
 		case START_PONG:
 			//initiate Pong.exe
 			PlaySound(NULL, 0, 0);
 
-
-
 			pong.prepare(w);
-			
+
 			while (sfw::stepContext() && !quit2)
 			{
 				switch (state2)
@@ -261,7 +278,7 @@ void main()
 
 			utsuho.prepare();
 
-		
+
 			while (sfw::stepContext() && !quit3)
 			{
 				sfw::drawTexture(w, 0, 600, 800, 600, 0, false, 0, 0x88888888);
@@ -273,16 +290,16 @@ void main()
 				case UTSUHO:
 					srand((unsigned)time(0));
 					utsuho.draw(d, r, w, u);
-					state3 = utsuho.next(d);
+					state3 = utsuho.next();
 					break;
 				case TERMINATE3: quit3 = true;
 				}
 			}
 		}
-		
+
 	}
 }
 
 
 
-	//written by skipperzip
+//written by skipperzip

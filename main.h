@@ -5,6 +5,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string>
+
 #pragma comment( lib, "Winmm.lib" )
 
 enum APP_STATE

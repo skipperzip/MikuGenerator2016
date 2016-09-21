@@ -4,7 +4,6 @@
 void Pong::prepare(int w)
 
 {
-	printf("initializing");
 	sfw::drawTexture(w, 0, 600, 800, 600, 0, false, 0, 0x88888888);
 	//play some music
 	//int Choice = 1;

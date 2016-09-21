@@ -51,5 +51,5 @@ public:
 	// Called on update
 	void draw(int d, int r, int w, int u);
 
-	APP_STATE next(int d);
+	APP_STATE next();
 };

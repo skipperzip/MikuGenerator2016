@@ -4,12 +4,39 @@
 void Utsuho::prepare()
 
 {
+	bounceCount = 0;
+	diff = 0;
+	print = 0;
+	//first circle
+	ballX = 400;
+	ballY = 300;
+	moveX = 0;
+	moveY = 0;
+	playerX = 0;
+	distance = 0;
+	distancelast = 0;
+	Xtrue = 0;
+	Ytrue = 0;
+	BallHit = 0;
+
+	RandomSet = 0;
+	Texture = 0;
+	TextureUp = 1;
+	NukeTimer = 0;
+	distance2 = 0;
+	BossX = 400;
+	BossY = 300;
+	BossX2 = 400;
+	BossY2 = 300;
+	BossMoveX = 0;
+	BossMoveY = 0;
+	i = 0;
 	while (i != 100)
 	{
-		if (bulletsScale[i] < 0) bulletsScale[i] = 0;
-		if (bulletTime[i] < 0) bulletTime[i] = 0;
-		if (bulletsX[i] < 0) bulletsX[i] = 0;
-		if (bulletsY[i] < 0) bulletsY[i] = 0;
+		bulletsScale[i] = 0;
+		bulletTime[i] = 0;
+		bulletsX[i] = 0;
+		bulletsY[i] = 0;
 		++i;
 	}
 	PlaySound(NULL, 0, 0);
@@ -17,7 +44,8 @@ void Utsuho::prepare()
 }
 void Utsuho::draw(int d, int r, int w, int u)                                                          //draw stuff
 {
-	while (sfw::stepContext()) //lol fonts actually work
+	GAMEOVER = 0;
+	while (sfw::stepContext() && GAMEOVER != 1) //lol fonts actually work
 	{
 		if (RandomSet == 0)
 		{
@@ -29,12 +57,13 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 
 
 
+
 		//draw the boss
 
 		if (TextureUp == 1)
 		{
-			sfw::drawString(BossFont, "b", BossX - 144, BossY + 200, 300, 300);
-			sfw::drawString(BossFont, "l", BossX - 146, BossY + 205, 300, 300);
+			sfw::drawString(BossFont, "b", BossX - 144, BossY + 180, 300, 300);
+			sfw::drawString(BossFont, "l", BossX - 146, BossY + 185, 300, 300);
 			if (Texture == 15)
 			{
 				TextureUp = 0;
@@ -44,8 +73,8 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 		}
 		else
 		{
-			sfw::drawString(BossFont, "c", BossX - 144, BossY + 200, 300, 300);
-			sfw::drawString(BossFont, "l", BossX - 146, BossY + 205, 300, 300);
+			sfw::drawString(BossFont, "c", BossX - 144, BossY + 180, 300, 300);
+			sfw::drawString(BossFont, "l", BossX - 146, BossY + 185, 300, 300);
 			--Texture;
 			if (Texture == 0)
 			{
@@ -78,7 +107,6 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 			// apply movement
 			BossX = BossX + (BossMoveX);
 			BossY = BossY + (BossMoveY);
-			printf("%f %f\n", BossMoveX, BossX);
 
 		}
 
@@ -126,6 +154,8 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 		}
 		sfw::drawCircle(ballX, ballY, distance, 120, CYAN);
 		sfw::drawTexture(u, sfw::getMouseX(), sfw::getMouseY(), sfw::getTextureWidth(u) / 2, sfw::getTextureHeight(u) / 2);
+		sfw::drawString(d, std::to_string(bounceCount).c_str(), sfw::getMouseX()-15, sfw::getMouseY()+15, 30, 30, '\0');
+		if (GAMEOVER == 1) sfw::drawString(d, "You Lost", 300, 300, 24, 24);
 		{
 			//------------------------------------------------------------------------------------------------------------first ball
 			if (bounceCount < 10) diff = bounceCount / 2;
@@ -149,7 +179,7 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 				{
 					sfw::drawString(d, "You Lost", 300, 300, 24, 24);
 					distance += sfw::getDeltaTime() * 240;
-					if (print == 0) printf("you hit the ball %d time(s)", bounceCount);
+					if (print == 0) GAMEOVER = 1;
 					print = 1;
 				}
 				ballX = ballX + moveX;
@@ -177,14 +207,15 @@ void Utsuho::draw(int d, int r, int w, int u)                                   
 					bounceCount = bounceCount + 1;
 				}
 			}
+			
 		}
 	}
 }
-APP_STATE Utsuho::next(int d)
+APP_STATE Utsuho::next()
 {
+	printf("You hit the ball %d times!\n", bounceCount);
 	if (GAMEOVER == 1)
 	{
-		sfw::drawString(d, "You Lost", 300, 300, 24, 24);
 		return TERMINATE3;
 	}
 	return UTSUHO;
