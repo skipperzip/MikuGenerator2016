@@ -126,15 +126,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pong.cpp" />
-    <ClCompile Include="Splash.cpp" />
-    <ClCompile Include="Utsuho.cpp" />
+    <ClCompile Include="Miku.cpp" />
+    <ClCompile Include="Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bosses.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="Pong.h" />
-    <ClInclude Include="Splash.h" />
+    <ClInclude Include="Miku.h" />
+    <ClInclude Include="Particle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

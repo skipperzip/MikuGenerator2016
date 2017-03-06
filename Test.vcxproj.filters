@@ -18,13 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Splash.cpp">
+    <ClCompile Include="Miku.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utsuho.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pong.cpp">
+    <ClCompile Include="Particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,13 +29,10 @@
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Splash.h">
+    <ClInclude Include="Miku.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bosses.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pong.h">
+    <ClInclude Include="Particle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

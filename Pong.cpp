@@ -192,6 +192,6 @@ void Pong::draw(int d, int r, int w, int u)
 }
 APP_STATE Pong::next()
 {
-	if (bounceCount >= 1)  return TERMINATE2; 
+	if (bounceCount >= 1)  return TERMINATE; 
 	return PONG;
 }

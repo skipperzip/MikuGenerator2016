@@ -216,7 +216,7 @@ APP_STATE Utsuho::next()
 	printf("You hit the ball %d times!\n", bounceCount);
 	if (GAMEOVER == 1)
 	{
-		return TERMINATE3;
+		return TERMINATE;
 	}
 	return UTSUHO;
 }
